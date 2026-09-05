@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Project List</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <style>
+        /* internal CSS */
+        .page-title { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 8px; }
+    </style>
+</h:head>
+<h:body>
+    <div class="page-container">
+        <h2 class="page-title">All Projects</h2>
+        <h:link outcome="/project/create.xhtml" value="+ New Project" styleClass="btn-primary" style="text-decoration:none; display:inline-block; margin-bottom:15px;"/>
+
+        <h:dataTable value="#{projectController.allProjects}" var="p" styleClass="data-table">
+            <h:column><f:facet name="header">ID</f:facet>#{p.projectId}</h:column>
+            <h:column><f:facet name="header">Name</f:facet>#{p.projectName}</h:column>
+            <h:column><f:facet name="header">Location</f:facet>#{p.location}</h:column>
+            <h:column><f:facet name="header">Start Date</f:facet>#{p.startDate}</h:column>
+            <h:column><f:facet name="header">Status</f:facet>#{p.status}</h:column>
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:link outcome="/project/edit.xhtml" value="Edit">
+                    <f:param name="id" value="#{p.projectId}"/>
+                </h:link>
+                &#160;|&#160;
+                <h:form>
+                    <h:commandLink value="Delete" action="#{projectController.delete(p.projectId)}"
+                                   style="color:#c0392b;"
+                                   onclick="return confirm('Delete this project?')"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+        <p style="margin-top:20px;"><h:link outcome="/index.xhtml" value="&#8592; Back to Home"/></p>
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Worker List</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <style>
+        .page-title { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 8px; }
+    </style>
+</h:head>
+<h:body>
+    <div class="page-container">
+        <h2 class="page-title">All Workers</h2>
+        <h:link outcome="/worker/create.xhtml" value="+ New Worker" styleClass="btn-primary" style="text-decoration:none; display:inline-block; margin-bottom:15px;"/>
+
+        <h:dataTable value="#{workerController.allWorkers}" var="w" styleClass="data-table">
+            <h:column><f:facet name="header">ID</f:facet>#{w.workerId}</h:column>
+            <h:column><f:facet name="header">First Name</f:facet>#{w.firstName}</h:column>
+            <h:column><f:facet name="header">Last Name</f:facet>#{w.lastName}</h:column>
+            <h:column><f:facet name="header">Phone</f:facet>#{w.phoneNumber}</h:column>
+            <h:column><f:facet name="header">Role</f:facet>#{w.role}</h:column>
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:link outcome="/worker/edit.xhtml" value="Edit">
+                    <f:param name="id" value="#{w.workerId}"/>
+                </h:link>
+                &#160;|&#160;
+                <h:form>
+                    <h:commandLink value="Delete" action="#{workerController.delete(w.workerId)}"
+                                   style="color:#c0392b;"
+                                   onclick="return confirm('Delete this worker?')"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+        <p style="margin-top:20px;"><h:link outcome="/index.xhtml" value="&#8592; Back to Home"/></p>
+    </div>
+</h:body>
+</html>

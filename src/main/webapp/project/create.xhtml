@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>New Project</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <div class="page-container">
+        <h2>Create New Project</h2>
+        <h:form>
+            <div class="form-row">
+                <h:outputLabel for="name" value="Project Name:"/><br/>
+                <h:inputText id="name" value="#{projectController.project.projectName}" required="true">
+                    <f:validateLength minimum="3" maximum="100"/>
+                </h:inputText>
+                <h:message for="name" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="location" value="Location:"/><br/>
+                <h:inputText id="location" value="#{projectController.project.location}" required="true"/>
+                <h:message for="location" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="start" value="Start Date:"/><br/>
+                <h:inputText id="start" value="#{projectController.project.startDate}" required="true">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for="start" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="end" value="Expected End Date:"/><br/>
+                <h:inputText id="end" value="#{projectController.project.expectedEndDate}">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                </h:inputText>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="status" value="Status:"/><br/>
+                <h:inputText id="status" value="#{projectController.project.status}" required="true">
+                    <f:validator validatorId="projectStatusValidator"/>
+                </h:inputText>
+                <h:message for="status" styleClass="error-message"/>
+                <span style="font-size:0.8em; color:#777;">e.g. Not Started, In Progress, Completed, On Hold</span>
+            </div>
+
+            <h:commandButton value="Save Project" action="#{projectController.save}" styleClass="btn-primary"/>
+        </h:form>
+        <h:messages globalOnly="false" styleClass="error-message" layout="list"/>
+        <p style="margin-top:15px;"><h:link outcome="/project/list.xhtml" value="&#8592; Back to List"/></p>
+    </div>
+</h:body>
+</html>

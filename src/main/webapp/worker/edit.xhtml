@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Edit Worker</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <f:metadata>
+        <f:viewParam name="id" value="#{workerController.editId}"/>
+        <f:viewAction action="#{workerController.loadForEdit(workerController.editId)}"/>
+    </f:metadata>
+
+    <div class="page-container">
+        <h2>Edit Worker</h2>
+        <h:form>
+            <h:messages globalOnly="false" styleClass="error-message" layout="list"/>
+            <h:inputHidden value="#{workerController.worker.workerId}"/>
+            <div class="form-row">
+                <h:outputLabel for="fname" value="First Name:"/><br/>
+                <h:inputText id="fname" value="#{workerController.worker.firstName}" required="true"/>
+                <h:message for="fname" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="lname" value="Last Name:"/><br/>
+                <h:inputText id="lname" value="#{workerController.worker.lastName}" required="true"/>
+                <h:message for="lname" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="phone" value="Phone Number:"/><br/>
+                <h:inputText id="phone" value="#{workerController.worker.phoneNumber}" required="true">
+                    <f:validateRegex pattern="^[0-9]{10}$"/>
+                </h:inputText>
+                <h:message for="phone" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="role" value="Role:"/><br/>
+                <h:inputText id="role" value="#{workerController.worker.role}" required="true">
+                    <f:validator validatorId="workerRoleValidator"/>
+                </h:inputText>
+                <h:message for="role" styleClass="error-message"/>
+            </div>
+
+            <h:commandButton value="Update Worker" action="#{workerController.update}" styleClass="btn-primary"/>
+        </h:form>
+
+        <p style="margin-top:15px;"><h:link outcome="/worker/list.xhtml" value="&#8592; Back to List"/></p>
+    </div>
+</h:body>
+</html>

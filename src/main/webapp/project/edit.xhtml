@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="jakarta.faces.passthrough">
+<h:head>
+    <title>Edit Project</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <f:metadata>
+        <f:viewParam name="id" value="#{projectController.editId}"/>
+        <f:viewAction action="#{projectController.loadForEdit(projectController.editId)}"/>
+    </f:metadata>
+
+    <div class="page-container">
+        <h2>Edit Project</h2>
+        <h:form>
+            <h:messages globalOnly="false" styleClass="error-message" layout="list"/>
+            <h:inputHidden value="#{projectController.project.projectId}"/>
+
+            <div class="form-row">
+                <h:outputLabel for="name" value="Project Name:"/><br/>
+                <h:inputText id="name" value="#{projectController.project.projectName}" required="true">
+                    <f:validateLength minimum="3" maximum="100"/>
+                </h:inputText>
+                <h:message for="name" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="location" value="Location:"/><br/>
+                <h:inputText id="location" value="#{projectController.project.location}" required="true"/>
+                <h:message for="location" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="start" value="Start Date:"/><br/>
+                <h:inputText id="start" value="#{projectController.project.startDate}" required="true" p:type="date">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for="start" styleClass="error-message"/>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="end" value="Expected End Date:"/><br/>
+                <h:inputText id="end" value="#{projectController.project.expectedEndDate}" p:type="date">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                </h:inputText>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="status" value="Status:"/><br/>
+                <h:inputText id="status" value="#{projectController.project.status}" required="true">
+                    <f:validator validatorId="projectStatusValidator"/>
+                </h:inputText>
+                <h:message for="status" styleClass="error-message"/>
+            </div>
+
+            <h:commandButton value="Update Project" action="#{projectController.update}" styleClass="btn-primary"/>
+        </h:form>
+        <p style="margin-top:15px;"><h:link outcome="/project/list.xhtml" value="&#8592; Back to List"/></p>
+    </div>
+</h:body>
+</html>
